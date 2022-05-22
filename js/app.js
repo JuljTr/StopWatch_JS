@@ -1,38 +1,20 @@
 const listBtn = document.querySelector("#list_btn");
+const msElement = document.querySelector("#milliseconds");
+const secElement = document.querySelector("#seconds");
 
 const startText = "Start";
 const stopText = "Stop";
 const resetText = "Reset";
 
+let intervalId;
+let milliseconds = 0;
+let seconds = 0;
 
 function createButton(text) {
     const newBtn = document.createElement("button");
     newBtn.innerText = text;
     listBtn.appendChild(newBtn);
     return newBtn;
-}
-
-const startBtn = createButton(startText);
-startBtn.addEventListener("click", () => {
-    console.log("hello")
-})
-
-createButton(stopText);
-createButton(resetText);
-
-let milliseconds = 0;
-let seconds = 0;
-
-
-const msElement = document.querySelector("#milliseconds");
-const secElement = document.querySelector("#seconds");
-
-milliseconds = milliseconds + 60;
-seconds = seconds + 10;
-
-if (milliseconds >= 60) {
-    milliseconds = 0;
-    seconds = seconds + 1;
 }
 
 function render(time, element) {
@@ -43,5 +25,33 @@ function render(time, element) {
     }
 }
 
-render(milliseconds, msElement);
-render(seconds, secElement);
+function startTimer() {
+    milliseconds += 1;
+    if (milliseconds >= 100) {
+        milliseconds = 0;
+        seconds = seconds + 1;
+    }
+    render(milliseconds, msElement);
+    render(seconds, secElement);
+}
+
+const startBtn = createButton(startText);
+startBtn.addEventListener("click", () => {
+    clearInterval(intervalId);
+    intervalId = setInterval(startTimer, 10);
+});
+
+const stopBtn = createButton(stopText);
+stopBtn.addEventListener("click", () => {
+    clearInterval(intervalId);
+});
+
+const resetBtn = createButton(resetText);
+resetBtn.addEventListener("click", () => {
+    clearInterval(intervalId);
+    milliseconds = 0;
+    seconds = 0;
+
+    render(milliseconds, msElement);
+    render(seconds, secElement);
+});
