@@ -1,4 +1,3 @@
 # StopWatch_JS
 
-StopWatch is a mini-project created with Javascript and DOM API manipulation. 
-A project created from scratch 
+A project created from scratch; StopWatch is a mini-project created with Javascript and DOM API manipulation.
